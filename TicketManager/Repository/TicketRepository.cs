@@ -7,46 +7,46 @@ using TicketManager.Models;
 
 namespace TicketManager.Repository
 {
-    public class TicketRepository
+    internal class TicketRepository : ITicketRepository
     {
         private readonly IDatabaseFactory _databaseFactory;
 
-        public TicketRepository(IDatabaseFactory databaseFactory)
+        internal TicketRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
 
-        internal async Task GetAll()
+        public async Task GetAll()
         {
             throw new NotImplementedException();
         }
 
-        internal async Task GetTicketsByUser(int userID)
+        public async Task GetTicketsByUser(int userID)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task GetTicket(int ticketID)
+        public async Task GetTicket(int ticketID)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task Create(Ticket ticket)
+        public async Task Create(Ticket ticket)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task Update(Ticket ticket)
+        public async Task Update(Ticket ticket)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task Delete(int ticketID)
+        public async Task Delete(int ticketID)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task MarkClosed(int ticketID)
+        public async Task MarkClosed(int ticketID)
         {
             throw new NotImplementedException();
         }

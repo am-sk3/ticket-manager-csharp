@@ -9,37 +9,33 @@ using TicketManager.Models;
 
 namespace TicketManager.Repository
 {
-    public class CompanyRepository
+    internal class CompanyRepository : ICompanyRepository
     {
         private readonly IDatabaseFactory _databaseFactory;
-        public CompanyRepository(IDatabaseFactory databaseFactory)
+        internal CompanyRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
 
-        internal async Task<Company> GetCompanyByIDAsync(int companyID)
+        public async Task<Company> GetCompanyByIDAsync(int companyID)
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 
-            string query = @"
-            SELECT * FROM companies WHERE id = @companyID
-            ";
+            string query = @"SELECT * FROM companies WHERE id = @companyID";
 
-            return await connection.QueryFirstOrDefaultAsync<Company>(query,new { companyID });
+            return await connection.QueryFirstOrDefaultAsync<Company>(query, new { companyID });
         }
 
-        internal async Task<IEnumerable<Company>> GetCompaniesAsync()
+        public async Task<IEnumerable<Company>> GetCompaniesAsync()
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 
-            string query = @"
-            SELECT * FROM companies
-            ";
+            string query = @"SELECT * FROM companies";
 
             return await connection.QueryAsync<Company>(query);
         }
-        
-        internal async Task<IEnumerable<Company>> GetCompaniesAsync(bool onlyEnabled)
+
+        public async Task<IEnumerable<Company>> GetCompaniesAsync(bool onlyEnabled)
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 
@@ -52,7 +48,7 @@ namespace TicketManager.Repository
             return await connection.QueryAsync<Company>(query);
         }
 
-        internal async Task<int> Create(string name)
+        public async Task<int> Create(string name)
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 
@@ -64,7 +60,7 @@ namespace TicketManager.Repository
             return await connection.ExecuteAsync(query, new { name });
         }
 
-        internal async Task<int> Update(string name, int companyID)
+        public async Task<int> Update(string name, int companyID)
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 
@@ -79,7 +75,7 @@ namespace TicketManager.Repository
             return await connection.ExecuteAsync(query, new { name, companyID });
         }
 
-        internal async Task<int> DeleteAsync(int companyID)
+        public async Task<int> DeleteAsync(int companyID)
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 

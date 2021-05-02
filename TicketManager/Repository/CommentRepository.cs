@@ -7,16 +7,16 @@ using TicketManager.Models;
 
 namespace TicketManager.Repository
 {
-    public class CommentRepository
+    internal class CommentRepository : ICommentRepository
     {
         private readonly IDatabaseFactory _databaseFactory;
 
-        public CommentRepository(IDatabaseFactory databaseFactory)
+        internal CommentRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
 
-        internal async Task Insert(Comment comment)
+        public async Task Insert(Comment comment)
         {
             throw new NotImplementedException();
         }

@@ -7,51 +7,51 @@ using TicketManager.Models;
 
 namespace TicketManager.Repository
 {
-    public class UserRepository
+    internal class UserRepository : IUserRepository
     {
         private readonly IDatabaseFactory _databaseFactory;
 
-        public UserRepository(IDatabaseFactory databaseFactory)
+        internal UserRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
 
-        internal async Task GetByID(int userID)
+        public async Task GetByID(int userID)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task GetAll()
-        {
-            throw new NotImplementedException();
-        }
-        
-        internal async Task GetAll(bool onlyEnabled)
+        public async Task GetAll()
         {
             throw new NotImplementedException();
         }
 
-        internal async Task Create(User user)
+        public async Task GetAll(bool onlyEnabled)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task Update(User user)
+        public async Task Create(User user)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task Delete(int userID)
+        public async Task Update(User user)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task ChangePassword(string password, int userID)
+        public async Task Delete(int userID)
         {
             throw new NotImplementedException();
         }
 
-        internal async Task GetByEmail(string email)
+        public async Task ChangePassword(string password, int userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task GetByEmail(string email)
         {
             throw new NotImplementedException();
         }
