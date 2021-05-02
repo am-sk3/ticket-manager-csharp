@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace TicketManager
 {
@@ -28,6 +29,10 @@ namespace TicketManager
         {
 
             services.AddControllers();
+            services.LoadDependencies();
+
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TicketManager", Version = "v1" });
