@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using TicketManager.Entities;
 using TicketManager.Factories;
-using TicketManager.Models;
 
 namespace TicketManager.Repository
 {
     internal class CompanyRepository : ICompanyRepository
     {
         private readonly IDatabaseFactory _databaseFactory;
-        internal CompanyRepository(IDatabaseFactory databaseFactory)
+        public CompanyRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
@@ -26,7 +26,7 @@ namespace TicketManager.Repository
             return await connection.QueryFirstOrDefaultAsync<Company>(query, new { companyID });
         }
 
-        public async Task<IEnumerable<Company>> GetCompaniesAsync()
+        public async Task<IEnumerable<Company>> GetAllAsync()
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 
@@ -35,7 +35,7 @@ namespace TicketManager.Repository
             return await connection.QueryAsync<Company>(query);
         }
 
-        public async Task<IEnumerable<Company>> GetCompaniesAsync(bool onlyEnabled)
+        public async Task<IEnumerable<Company>> GetAllAsync(bool onlyEnabled)
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 
@@ -48,7 +48,7 @@ namespace TicketManager.Repository
             return await connection.QueryAsync<Company>(query);
         }
 
-        public async Task<int> Create(string name)
+        public async Task<int> CreateAsync(string name)
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 
@@ -60,7 +60,7 @@ namespace TicketManager.Repository
             return await connection.ExecuteAsync(query, new { name });
         }
 
-        public async Task<int> Update(string name, int companyID)
+        public async Task<int> UpdateAsync(string name, int companyID)
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 

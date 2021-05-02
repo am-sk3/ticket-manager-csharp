@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using TicketManager.Entities;
 using TicketManager.Models;
 
 namespace TicketManager.Repository

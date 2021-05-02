@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using TicketManager.Middleware;
 
 namespace TicketManager
 {
@@ -54,6 +55,8 @@ namespace TicketManager
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseExceptionMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
