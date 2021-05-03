@@ -31,6 +31,7 @@ namespace TicketManager
 
             services.AddControllers();
             services.LoadDependencies();
+            services.AddRouting(options => options.LowercaseUrls = true);
 
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
@@ -48,6 +49,7 @@ namespace TicketManager
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TicketManager v1"));
+
             }
 
             app.UseHttpsRedirection();

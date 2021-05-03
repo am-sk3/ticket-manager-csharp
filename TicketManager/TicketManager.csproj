@@ -10,4 +10,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TicketManager.Extensions\TicketManager.Extensions.csproj" />
+  </ItemGroup>
+
 </Project>

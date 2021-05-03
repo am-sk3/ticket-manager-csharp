@@ -45,7 +45,7 @@ namespace TicketManager.Repository
                 @onlyEnabled = 0 OR is_deleted = 0
             ";
 
-            return await connection.QueryAsync<Company>(query);
+            return await connection.QueryAsync<Company>(query, new { onlyEnabled });
         }
 
         public async Task<int> CreateAsync(string name)
@@ -54,10 +54,12 @@ namespace TicketManager.Repository
 
             string query = @"
             INSERT INTO companies(name)
-            VALUES(@name)
+            VALUES(@name);
+
+            SELECT last_insert_rowid();
             ";
 
-            return await connection.ExecuteAsync(query, new { name });
+            return await connection.ExecuteScalarAsync<int>(query, new { name });
         }
 
         public async Task<int> UpdateAsync(string name, int companyID)
