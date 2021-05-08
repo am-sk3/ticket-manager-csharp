@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using TicketManager.Entities;
-using TicketManager.Factories;
+using TicketManager.Repository.Factories;
+using TicketManager.Repository.Models;
 
 namespace TicketManager.Repository
 {
-    internal class CompanyRepository : ICompanyRepository
+    public class CompanyRepository : ICompanyRepository
     {
         private readonly IDatabaseFactory _databaseFactory;
         public CompanyRepository(IDatabaseFactory databaseFactory)
@@ -62,7 +62,7 @@ namespace TicketManager.Repository
             return await connection.ExecuteScalarAsync<int>(query, new { name });
         }
 
-        public async Task<int> UpdateAsync(string name, int companyID)
+        public async Task<int> UpdateAsync(Company company)
         {
             using var connection = await _databaseFactory.GetConnectionAsync();
 
@@ -71,10 +71,10 @@ namespace TicketManager.Repository
             SET
                 name = @name
             WHERE
-                id = @companyID
+                id = @ID
             ";
 
-            return await connection.ExecuteAsync(query, new { name, companyID });
+            return await connection.ExecuteAsync(query, new { name = company.Name, ID = company.ID});
         }
 
         public async Task<int> DeleteAsync(int companyID)

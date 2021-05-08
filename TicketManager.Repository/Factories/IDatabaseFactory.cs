@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Threading.Tasks;
 
-namespace TicketManager.Factories
+namespace TicketManager.Repository.Factories
 {
     public interface IDatabaseFactory
     {

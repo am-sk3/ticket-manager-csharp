@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TicketManager.Entities;
 using TicketManager.Extensions;
-using TicketManager.Models;
+using TicketManager.Repository.Models;
 using TicketManager.Services;
+using TicketManager.ViewModels.Company;
 
 namespace TicketManager.Controllers
 {
@@ -24,7 +24,7 @@ namespace TicketManager.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> GetAllCompanies(bool onlyEnabled)
+        public async Task<ActionResult<IEnumerable<CompanyGetViewModel>>> GetAllCompanies(bool onlyEnabled)
         {
             var companies = await _service.GetAllAsync(onlyEnabled);
 
@@ -32,7 +32,9 @@ namespace TicketManager.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetCompany(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<CompanyGetViewModel>> GetCompany(int id)
         {
             var company = await _service.GetByIDAsync(id);
 
@@ -41,28 +43,46 @@ namespace TicketManager.Controllers
                 return NotFound();
             }
 
-            return Ok(new { company });
+            return Ok(company);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult> CreateCompany(CompanyClient company)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateCompany(CompanyAddEditViewModel company)
         {
-            var result = await _service.CreateAsync(company.Name);
+            var result = await _service.CreateAsync(company);
 
             return CreatedAtAction(nameof(GetCompany), new { id = result },company);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult> EditCompany(int id, CompanyClient company)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> EditCompany(int id, CompanyAddEditViewModel company)
         {
             var result = await _service.EditAsync(company, id);
 
             if (result.NotEquals(1))
             {
-                throw new Exception("failed to edit");
+                return NotFound();
             }
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteCompany(int id)
+        {
+            var result = await _service.RemoveAsync(id);
+
+            if (result.Equals(0))
+            {
+                return NotFound();
+            }
+
             return NoContent();
         }
     }

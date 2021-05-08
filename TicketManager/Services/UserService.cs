@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TicketManager.Entities;
 using TicketManager.Repository;
+using TicketManager.Repository.Models;
 
 namespace TicketManager.Services
 {

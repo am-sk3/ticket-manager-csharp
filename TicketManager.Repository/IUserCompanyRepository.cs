@@ -2,7 +2,7 @@
 
 namespace TicketManager.Repository
 {
-    internal interface IUserCompanyRepository
+    public interface IUserCompanyRepository
     {
         Task<int> AddUserToCompany(int userID, int companyID);
         Task<int> GetAllUsersFromCompany(int company);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TicketManager.Entities
+namespace TicketManager.Repository.Models
 {
     public class Ticket
     {

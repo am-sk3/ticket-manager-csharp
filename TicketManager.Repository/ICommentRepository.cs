@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using TicketManager.Entities;
+using TicketManager.Repository.Models;
 
 namespace TicketManager.Repository
 {
-    internal interface ICommentRepository
+    public interface ICommentRepository
     {
         Task Insert(Comment comment);
     }

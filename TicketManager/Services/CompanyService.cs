@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TicketManager.Entities;
-using TicketManager.Models;
+using TicketManager.Extensions.ViewModel;
 using TicketManager.Repository;
+using TicketManager.Repository.Models;
+using TicketManager.ViewModels.Company;
 
 namespace TicketManager.Services
 {
-    internal class CompanyService : ICompanyService
+    public class CompanyService : ICompanyService
     {
         private readonly ICompanyRepository _company;
 
@@ -17,24 +18,28 @@ namespace TicketManager.Services
             _company = company;
         }
 
-        public async Task<IEnumerable<Company>> GetAllAsync(bool onlyEnabled)
+        public async Task<IEnumerable<CompanyGetViewModel>> GetAllAsync(bool onlyEnabled)
         {
-            return await _company.GetAllAsync(onlyEnabled);
+            var result = await _company.GetAllAsync(onlyEnabled);
+
+            return result.Select(x => x.ToGetViewModel());
         }
 
-        public async Task<Company> GetByIDAsync(int companyID)
+        public async Task<CompanyGetViewModel> GetByIDAsync(int companyID)
         {
-            return await _company.GetCompanyByIDAsync(companyID);
+            var result = await _company.GetCompanyByIDAsync(companyID);
+            return result.ToGetViewModel();
         }
 
-        public async Task<int> CreateAsync(string companyName)
+        public async Task<int> CreateAsync(CompanyAddEditViewModel company)
         {
-            return await _company.CreateAsync(companyName);
+            return await _company.CreateAsync(company.Name);
         }
 
-        public async Task<int> EditAsync(CompanyClient company, int companyID)
+        public async Task<int> EditAsync(CompanyAddEditViewModel company, int companyID)
         {
-            return await _company.UpdateAsync(company.Name,companyID);
+            company.ID = companyID;
+            return await _company.UpdateAsync(company.ToCompanyModel());
         }
 
         public async Task<int> RemoveAsync(int companyID)

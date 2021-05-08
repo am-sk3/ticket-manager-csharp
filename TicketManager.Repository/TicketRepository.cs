@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TicketManager.Entities;
-using TicketManager.Factories;
+using TicketManager.Repository.Factories;
+using TicketManager.Repository.Models;
 
 namespace TicketManager.Repository
 {
-    internal class TicketRepository : ITicketRepository
+    public class TicketRepository : ITicketRepository
     {
         private readonly IDatabaseFactory _databaseFactory;
 
-        internal TicketRepository(IDatabaseFactory databaseFactory)
+        public TicketRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }

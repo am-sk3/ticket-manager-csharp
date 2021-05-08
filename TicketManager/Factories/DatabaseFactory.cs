@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using TicketManager.Repository.Factories;
 
 namespace TicketManager.Factories
 {

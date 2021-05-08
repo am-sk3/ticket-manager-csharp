@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TicketManager.Factories;
-using TicketManager.Repository;
+using TicketManager.Repository.Configuration;
+using TicketManager.Repository.Factories;
 using TicketManager.Services;
 
 namespace TicketManager
@@ -14,13 +15,10 @@ namespace TicketManager
         public static void LoadDependencies(this IServiceCollection services)
         {
             services.AddScoped<IDatabaseFactory, DatabaseFactory>();
-            //services.AddTransient<ICommentRepository, CommentRepository>();
-            services.AddTransient<ICompanyRepository, CompanyRepository>();
-            //services.AddTransient<ITicketRepository, TicketRepository>();
-            //services.AddTransient<IUserRepository, UserRepository>();
-            //services.AddTransient<IUserCompanyRepository, UserCompanyRepository>();
 
             services.AddTransient<ICompanyService, CompanyService>();
+
+            services.InitializeRepositories(); //initialize repositories from class
         }
     }
 }

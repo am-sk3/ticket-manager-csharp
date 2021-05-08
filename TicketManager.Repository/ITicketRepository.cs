@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using TicketManager.Entities;
+using TicketManager.Repository.Models;
 
 namespace TicketManager.Repository
 {
-    internal interface ITicketRepository
+    public interface ITicketRepository
     {
         Task Create(Ticket ticket);
         Task Delete(int ticketID);

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TicketManager.Factories;
+using TicketManager.Repository.Factories;
 
 namespace TicketManager.Repository
 {
-    internal class UserCompanyRepository : IUserCompanyRepository
+    public class UserCompanyRepository : IUserCompanyRepository
     {
         private readonly IDatabaseFactory _databaseFactory;
 
-        internal UserCompanyRepository(IDatabaseFactory databaseFactory)
+        public UserCompanyRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }

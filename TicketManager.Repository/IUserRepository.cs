@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
-using TicketManager.Entities;
-using TicketManager.Models;
+using TicketManager.Repository.Models;
 
 namespace TicketManager.Repository
 {
-    internal interface IUserRepository
+    public interface IUserRepository
     {
         Task ChangePassword(string password, int userID);
         Task Create(User user);
