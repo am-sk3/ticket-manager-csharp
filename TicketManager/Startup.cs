@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Dapper;
 using TicketManager.Middleware;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace TicketManager
 {
@@ -30,7 +31,10 @@ namespace TicketManager
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.OutputFormatters.RemoveType<StringOutputFormatter>();
+            });
             services.LoadDependencies();
             services.AddRouting(options => options.LowercaseUrls = true);
 
