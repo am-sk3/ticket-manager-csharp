@@ -14,7 +14,7 @@ namespace TicketManager.Repository.Configuration
             //services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();
             //services.AddTransient<ITicketRepository, TicketRepository>();
-            //services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             //services.AddTransient<IUserCompanyRepository, UserCompanyRepository>();
         }
     }

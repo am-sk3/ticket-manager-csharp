@@ -1,17 +1,18 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TicketManager.Repository.Models;
 
 namespace TicketManager.Repository
 {
     public interface IUserRepository
     {
-        Task ChangePassword(string password, int userID);
-        Task Create(User user);
-        Task Delete(int userID);
-        Task GetAll();
-        Task GetAll(bool onlyEnabled);
-        Task GetByEmail(string email);
-        Task GetByID(int userID);
-        Task Update(User user);
+        Task<int> ChangePassword(string password, int userID);
+        Task<int> Create(User user);
+        Task<int> Delete(int userID);
+        Task<IEnumerable<User>> GetAll();
+        Task<IEnumerable<User>> GetAll(bool onlyEnabled);
+        Task<User> GetByEmail(string email);
+        Task<User> GetByID(int userID);
+        Task<int> Update(User user);
     }
 }

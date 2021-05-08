@@ -17,6 +17,7 @@ namespace TicketManager
             services.AddScoped<IDatabaseFactory, DatabaseFactory>();
 
             services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.InitializeRepositories(); //initialize repositories from class
         }

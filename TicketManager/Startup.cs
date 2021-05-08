@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using TicketManager.Middleware;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace TicketManager
 {
@@ -48,7 +49,10 @@ namespace TicketManager
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TicketManager v1"));
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TicketManager v1");
+                    c.DocExpansion(DocExpansion.None);
+                    });
 
             }
 

@@ -14,8 +14,4 @@
     <ProjectReference Include="..\TicketManager.Repository\TicketManager.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\ViewModel\" />
-  </ItemGroup>
-
 </Project>

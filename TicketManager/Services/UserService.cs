@@ -4,46 +4,55 @@ using System.Linq;
 using System.Threading.Tasks;
 using TicketManager.Repository;
 using TicketManager.Repository.Models;
+using TicketManager.ViewModels.User;
+using TicketManager.Extensions.ViewModel;
 
 namespace TicketManager.Services
 {
-    internal class UserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _user;
 
-        internal UserService(IUserRepository user)
+        public UserService(IUserRepository user)
         {
             _user = user;
         }
 
-        public async Task GetAllUsers()
+        public async Task<IEnumerable<UserGetViewModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var result = await _user.GetAll();
+            return result.Select(x => x.ToViewModel());
         }
 
-        public async Task GetUserByID(int userID)
+        public async Task<UserGetViewModel> GetByIdAsync(int userID)
         {
-            throw new NotImplementedException();
+            var result = await _user.GetByID(userID);
+            return result.ToViewModel();
         }
 
-        public async Task Create(User user)
+        public async Task<int> CreateAsync(UserAddEditViewModel user)
         {
-            throw new NotImplementedException();
+            var request = user.ToUserModel();
+
+            return await _user.Create(request);
         }
 
-        public async Task Edit(User user)
+        public async Task<int> EditAsync(UserAddEditViewModel user, int userID)
         {
-            throw new NotImplementedException();
+            var request = user.ToUserModel();
+            request.ID = userID;
+
+            return await _user.Update(request);
         }
 
-        public async Task Remove(int userID)
+        public async Task<int> RemoveAsync(int userID)
         {
-            throw new NotImplementedException();
+            return await _user.Delete(userID);
         }
 
-        public async Task ChangePassword(string password, int userID)
+        public async Task<int> ChangePasswordAsync(string password, int userID)
         {
-            throw new NotImplementedException();
+            return await _user.ChangePassword(password, userID);
         }
 
 
