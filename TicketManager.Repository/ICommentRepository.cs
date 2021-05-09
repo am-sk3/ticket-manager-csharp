@@ -11,6 +11,6 @@ namespace TicketManager.Repository
         Task<int> Delete(int commentID);
         Task<int> GetLastCommentIDFromTicket(int ticketID);
         Task<IEnumerable<Comment>> GetAll(int ticketID);
-
+        Task<int> GetTicketIDFromComment(int commentID);
     }
 }

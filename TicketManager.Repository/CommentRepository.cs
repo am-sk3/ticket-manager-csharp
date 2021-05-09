@@ -53,6 +53,15 @@ namespace TicketManager.Repository
             return await conn.QueryAsync<Comment>(query, new { ticketID });
         }
 
+        public async Task<int> GetTicketIDFromComment(int commentID)
+        {
+            using var conn = await DbConnectionAsync();
+
+            string query = "SELECT ticket_id FROM Comments WHERE id = @commentID ";
+
+            return await conn.ExecuteScalarAsync<int>(query, new { Comment });
+        }
+
         public async Task<int> GetLastCommentIDFromTicket(int ticketID)
         {
             using var conn = await DbConnectionAsync();
