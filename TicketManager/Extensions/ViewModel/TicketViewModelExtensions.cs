@@ -39,7 +39,7 @@ namespace TicketManager.Extensions.ViewModel
             };
         }
 
-        public static Ticket ToModel(this TicketAddViewModel ticket)
+        public static Ticket ToTicketModel(this TicketAddViewModel ticket)
         {
             return new Ticket
             {
