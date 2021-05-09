@@ -40,7 +40,7 @@ namespace TicketManager.Repository
         {
             using var conn = await DbConnectionAsync();
 
-            string query = "DELETE FROM Tickets WHERE id = @ticketID";
+            string query = "UPDATE Tickets SET is_deleted = 1 WHERE id = @ticketID";
 
             return await conn.ExecuteAsync(query, new { ticketID });
         }
@@ -54,7 +54,7 @@ namespace TicketManager.Repository
             return await conn.QueryAsync<Ticket>(query);
         }
 
-        public async Task<Ticket> GetTicketById(int ticketID)
+        public async Task<Ticket> GetById(int ticketID)
         {
             using var conn = await DbConnectionAsync();
 
@@ -63,7 +63,7 @@ namespace TicketManager.Repository
             return await conn.QueryFirstOrDefaultAsync<Ticket>(query, new { ticketID });
         }
 
-        public async Task<IEnumerable<Ticket>> GetTicketsByCompany(int companyID)
+        public async Task<IEnumerable<Ticket>> GetByCompany(int companyID)
         {
             using var conn = await DbConnectionAsync();
 
@@ -72,7 +72,7 @@ namespace TicketManager.Repository
             return await conn.QueryAsync<Ticket>(query, new { companyID});
         }
 
-        public async Task<IEnumerable<Ticket>> GetTicketsByUser(int userID)
+        public async Task<IEnumerable<Ticket>> GetByUser(int userID)
         {
             using var conn = await DbConnectionAsync();
 
@@ -81,7 +81,7 @@ namespace TicketManager.Repository
             return await conn.QueryAsync<Ticket>(query, new { userID });
         }
 
-        public async Task<int> ChangeTicketStatus(TicketStatus status, int ticketID)
+        public async Task<int> ChangeStatus(TicketStatus status, int ticketID)
         {
             using var conn = await DbConnectionAsync();
 
