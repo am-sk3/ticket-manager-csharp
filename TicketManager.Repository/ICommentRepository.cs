@@ -12,5 +12,6 @@ namespace TicketManager.Repository
         Task<int> GetLastCommentIDFromTicket(int ticketID);
         Task<IEnumerable<Comment>> GetAll(int ticketID);
         Task<int> GetTicketIDFromComment(int commentID);
+        Task<Comment> GetByID(int id);
     }
 }

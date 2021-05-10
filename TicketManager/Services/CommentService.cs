@@ -10,7 +10,7 @@ using TicketManager.ViewModels.Comment;
 
 namespace TicketManager.Services
 {
-    public class CommentService
+    public class CommentService : ICommentService
     {
         private readonly ICommentRepository _comment;
 
@@ -27,36 +27,27 @@ namespace TicketManager.Services
 
         public async Task<int> GetLastIDFromTicket(int ticketID)
         {
+            var result = await _comment.GetLastCommentIDFromTicket(ticketID);
             //var result = await _comment.GetById(id);
             //return result.ToViewModel();
-            throw new NotImplementedException();
+            return result;
         }
 
-        public async Task<IEnumerable<CommentGetViewModel>> GetByCompany(int companyID)
+        public async Task<CommentGetViewModel> GetByID(int id)
         {
-            //var result = await _ticket.GetByCompany(companyID);
-            //return result.Select(x => x.ToGetAllViewModel());
-            throw new NotImplementedException();
-        }
+            var result = await _comment.GetByID(id);
 
-        public async Task<IEnumerable<CommentGetViewModel>> GetByUser(int userID)
-        {
-            //var result = await _ticket.GetByUser(userID);
-            //return result.Select(x => x.ToGetAllViewModel());
-            throw new NotImplementedException();
+            return result.ToViewModel();
         }
 
         public async Task<int> CreateAsync(CommentAddEditViewModel ticket)
         {
-            //var request = ticket.ToTicketModel();
-
-            //return await _ticket.Create(request);
-            throw new NotImplementedException();
+            return await _comment.Create(ticket.ToModel());
         }
 
         public async Task<int> RemoveAsync(int id)
         {
-            var ticketID = await _comment.GetLastCommentIDFromTicket(id);
+            var ticketID = await _comment.GetTicketIDFromComment(id);
             var lastCommentID = await _comment.GetLastCommentIDFromTicket(ticketID);
 
             if (id.NotEquals(lastCommentID))
