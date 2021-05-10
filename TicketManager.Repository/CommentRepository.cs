@@ -22,17 +22,19 @@ namespace TicketManager.Repository
         {
             using var conn = await DbConnectionAsync();
 
-            string query = 
+            string query =
                 @"INSERT INTO Comments(user_id,ticket_id,content)
-                    VALUES(@userID,@ticketID,@content)";
+                    VALUES(@userID,@ticketID,@content);
+
+                SELECT last_insert_rowid();";
 
             DynamicParameters parameters = new();
 
             parameters.Add("userID",comment.UserID);
-            parameters.Add("ticket",comment.TicketID);
+            parameters.Add("ticketID",comment.TicketID);
             parameters.Add("content",comment.Content);
 
-            return await conn.ExecuteAsync(query, parameters);
+            return await conn.ExecuteScalarAsync<int>(query, parameters);
         }
 
         public async Task<int> Delete(int commentID)

@@ -49,10 +49,12 @@ namespace TicketManager.Repository
         {
             using var conn = await DbConnectionAsync();
 
-            string query = 
+            string query =
                 @"INSERT INTO 
                     Users(name,email,password,creation_date,is_admin,is_enabled) 
-                    VALUES(@name,@email,@password,@creation_date,@is_admin,@is_enabled)";
+                    VALUES(@name,@email,@password,@creation_date,@is_admin,@is_enabled);
+
+                SELECT last_insert_rowid();";
 
             var parameters = new DynamicParameters();
 
@@ -63,7 +65,7 @@ namespace TicketManager.Repository
             parameters.Add("is_admin",user.IsAdmin);
             parameters.Add("is_enabled",user.IsEnabled);
 
-            return await conn.ExecuteAsync(query, parameters);
+            return await conn.ExecuteScalarAsync<int>(query, parameters);
         }
 
         public async Task<int> Update(User user)
