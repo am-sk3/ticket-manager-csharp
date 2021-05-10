@@ -13,6 +13,5 @@ namespace TicketManager.ViewModels.Comment
         public int UserID { get; set; }
         public int TicketID { get; set; }
         public string Content { get; set; }
-        public DateTime CreationDate { get; set; }
     }
 }

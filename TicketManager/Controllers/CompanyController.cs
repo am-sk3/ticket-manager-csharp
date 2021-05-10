@@ -8,6 +8,7 @@ using TicketManager.Extensions;
 using TicketManager.Repository.Models;
 using TicketManager.Services;
 using TicketManager.ViewModels.Company;
+using TicketManager.ViewModels.Ticket;
 
 namespace TicketManager.Controllers
 {
@@ -16,10 +17,12 @@ namespace TicketManager.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _service;
+        private readonly ITicketService _ticketService;
 
-        public CompanyController(ICompanyService service)
+        public CompanyController(ICompanyService service, ITicketService ticketService)
         {
             _service = service;
+            _ticketService = ticketService;
         }
 
         [HttpGet]
@@ -84,6 +87,15 @@ namespace TicketManager.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("{id}/tickets")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<TicketGetAllViewModel>>> GetTicketsByCompany(int id)
+        {
+            var result = await _ticketService.GetByCompany(id);
+
+            return Ok(result);
         }
     }
 }

@@ -25,7 +25,6 @@ namespace TicketManager.Extensions.ViewModel
             return new Comment
             {
                 Content = comment.Content,
-                CreationDate = comment.CreationDate,
                 ID = comment.ID,
                 TicketID = comment.TicketID,
                 UserID = comment.UserID

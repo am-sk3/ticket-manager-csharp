@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TicketManager.Extensions;
 using TicketManager.Services;
+using TicketManager.ViewModels.Ticket;
 using TicketManager.ViewModels.User;
 
 namespace TicketManager.Controllers
@@ -15,10 +16,12 @@ namespace TicketManager.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
+        private readonly ITicketService _ticketService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService,ITicketService ticketService)
         {
             _service = userService;
+            _ticketService = ticketService;
         }
 
         [HttpGet]
@@ -84,5 +87,15 @@ namespace TicketManager.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("{id}/tickets")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<TicketGetAllViewModel>>> GetTicketsByUser(int id)
+        {
+            var result = await _ticketService.GetByUser(id);
+
+            return Ok(result);
+        }
+
     }
 }
