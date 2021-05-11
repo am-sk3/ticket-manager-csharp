@@ -9,6 +9,7 @@ using TicketManager.Repository.Models;
 using TicketManager.Services;
 using TicketManager.ViewModels.Company;
 using TicketManager.ViewModels.Ticket;
+using TicketManager.ViewModels.UserCompany;
 
 namespace TicketManager.Controllers
 {
@@ -18,11 +19,13 @@ namespace TicketManager.Controllers
     {
         private readonly ICompanyService _service;
         private readonly ITicketService _ticketService;
+        private readonly IUserCompaniesService _userCompaniesService;
 
-        public CompanyController(ICompanyService service, ITicketService ticketService)
+        public CompanyController(ICompanyService service, ITicketService ticketService, IUserCompaniesService userCompaniesService)
         {
             _service = service;
             _ticketService = ticketService;
+            _userCompaniesService = userCompaniesService;
         }
 
         [HttpGet]
@@ -89,13 +92,35 @@ namespace TicketManager.Controllers
             return NoContent();
         }
 
-        [HttpGet("{id}/tickets")]
+        [HttpGet("{id}/users")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<TicketGetAllViewModel>>> GetTicketsByCompany(int id)
+        public async Task<ActionResult<IEnumerable<UserCompanyGetViewModel>>> GetUserCompanies(int id)
         {
-            var result = await _ticketService.GetByCompany(id);
+            var result = await _userCompaniesService.GetAllUsersFromCompany(id);
 
             return Ok(result);
+        }
+
+        [HttpPost("{id}/users")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> AddUserToCompany(int id, CompanyUserAddViewModel user)
+        {
+            var result = await _userCompaniesService.AddUserToCompany(id,user);
+
+            return Ok(result);
+        }
+
+
+        [HttpDelete("{id}/users/{userID}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> RemoveUserFromCompany(int id, int userID)
+        {
+            var result = await _userCompaniesService.RemoveUserFromCompany(userID, id);
+
+            if (result.Equals(0))
+                return NotFound();
+
+            return NoContent();
         }
     }
 }

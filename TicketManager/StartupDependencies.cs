@@ -20,6 +20,7 @@ namespace TicketManager
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITicketService, TicketService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IUserCompaniesService, UserCompaniesService>();
 
             services.InitializeRepositories(); //initialize repositories from class
         }
