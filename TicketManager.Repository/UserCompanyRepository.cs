@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using TicketManager.Repository.Factories;
+using TicketManager.Repository.Models;
 
 namespace TicketManager.Repository
 {
@@ -17,29 +20,67 @@ namespace TicketManager.Repository
 
         public async Task<int> AddUserToCompany(int userID, int companyID)
         {
-            throw new NotImplementedException();
+            using var conn = await DbConnectionAsync();
+
+            string query = 
+                @"INSERT INTO Users_Companies(user_id,company_id)
+                    VALUES(@userID,@companyID)";
+
+            return await conn.ExecuteAsync(query, new { userID, companyID });
         }
 
         public async Task<int> RemoveUserFromCompany(int userID, int companyID)
         {
-            throw new NotImplementedException();
+            using var conn = await DbConnectionAsync();
+
+            string query = "DELETE FROM Users_Companies WHERE user_id = @userID AND company_id = @companyID";
+
+            return await conn.ExecuteAsync(query, new { userID, companyID });
         }
 
-        public async Task<int> GetAllUsersFromCompany(int company)
+        public async Task<IEnumerable<UserCompany>> GetAllUsersFromCompany(int companyID)
         {
-            throw new NotImplementedException();
+            using var conn = await DbConnectionAsync();
+
+            string query =
+                @"SELECT 
+                        user_id AS ID
+                        ,Users.Name
+                    FROM 
+                        Users_Companies 
+                    INNER JOIN Users ON Users.Id = Users_Companies.user_id
+                    WHERE 
+                        Users_Companies.company_id = @companyID";
+
+            return await conn.QueryAsync<UserCompany>(query, new { companyID });
         }
 
-        public async Task GetUserByEmail(string userEmail)
+        public async Task<IEnumerable<CompanyUser>> GetAllCompaniesFromUserID(int userID)
         {
-            throw new NotImplementedException();
+            using var conn = await DbConnectionAsync();
+
+            string query =
+                @"SELECT 
+                        company_id  AS ID
+                        ,Companies.Name
+                    FROM 
+                        Users_Companies 
+                    INNER JOIN Companies ON Companies.Id = Users_Companies.company_id
+                    WHERE 
+                        Users_Companies.user_id = @userID";
+
+            return await conn.QueryAsync<CompanyUser>(query, new { userID });
         }
 
-        public async Task GetByUserID(int userID)
+        private async Task<IDbConnection> DbConnectionAsync()
         {
-            throw new NotImplementedException();
+            return await _databaseFactory.GetConnectionAsync();
         }
 
+        private IDbConnection DbConnection()
+        {
+            return _databaseFactory.GetConnection();
+        }
 
     }
 }

@@ -1,13 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using TicketManager.Repository.Models;
 
 namespace TicketManager.Repository
 {
     public interface IUserCompanyRepository
     {
         Task<int> AddUserToCompany(int userID, int companyID);
-        Task<int> GetAllUsersFromCompany(int company);
-        Task GetByUserID(int userID);
-        Task GetUserByEmail(string userEmail);
+        Task<IEnumerable<UserCompany>> GetAllUsersFromCompany(int company);
+        Task<IEnumerable<CompanyUser>> GetAllCompaniesFromUserID(int userID);
         Task<int> RemoveUserFromCompany(int userID, int companyID);
     }
 }

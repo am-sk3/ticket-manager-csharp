@@ -86,7 +86,7 @@ namespace TicketManager.Repository
 
             var parameters = new DynamicParameters();
 
-            parameters.Add("ID", user.ID);
+            parameters.Add("id", user.ID);
             parameters.Add("name", user.Name);
             parameters.Add("email", user.Email);
             parameters.Add("password", user.Password);
